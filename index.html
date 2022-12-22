@@ -1,0 +1,19 @@
+<html><body>
+	<script type="text/javascript">
+		function clickMonitor(id) {
+			fetch(`http://lab2_devops.ua:8030/category/monitor_click/${id}`)
+		}
+		console.log('ad')
+		fetch('http://lab2_devops.ua:8030/category/monitors')
+  			.then(response => {
+  				response.json().then(json =>{
+  					json.monitors.map(
+  						row => document.getElementById("content")
+  						.innerHTML = document.getElementById("content").innerHTML + 
+`<a href="http://lab2_devops.ua:8030/category/monitor/${row[0]}" onclick="clickMonitor(${row[0]})">${row[1]}</a><br>`
+  				)
+  				})
+  			})
+	</script>
+	<div id="content"></div>
+</body></html>
