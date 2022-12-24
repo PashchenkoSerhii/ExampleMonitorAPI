@@ -1,0 +1,12 @@
+[Unit]
+Description=Simple HTTP Server
+Requires=network.target
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=True
+ExecStart=/opt/monitor_api/monitor_api.sh start
+ExecStop=/opt/monitor_api/monitor_api.sh stop
+[Install]
+WantedBy=multi-user.target

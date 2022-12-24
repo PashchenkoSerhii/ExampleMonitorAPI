@@ -1,0 +1,33 @@
+#! bin/bash
+
+path_root="/opt/monitor_api"
+
+sudo mkdir -p $path_root/pub
+if [[ ! -f $path_root/monitor_api.sh ]]; then
+	sudo cp ./monitor_api.sh $path_root
+fi
+
+
+if [[ ! -f /etc/systemd/system/monitor_api.service ]]; then
+	sudo cp ./monitor_api.service /etc/systemd/system
+fi
+
+
+if [[ ! -f $path_root/pub/restApiMonitors ]]; then
+	sudo cp -r ./restApiMonitors $path_root/pub
+
+	cd $path_root/pub/restApiMonitors
+	source ~/.profile 
+	source /etc/profile
+
+	go build
+
+fi
+
+echo "ok"
+sudo chmod 777 $path_root/monitor_api.sh
+
+sudo systemctl enable monitor_api.service
+
+sudo systemctl start monitor_api.service
+
